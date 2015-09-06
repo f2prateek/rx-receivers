@@ -50,7 +50,7 @@ public class SampleActivity extends Activity {
               case WifiManager.WIFI_STATE_ENABLED:
                 return "wifi enabled";
               case WifiManager.WIFI_STATE_ENABLING:
-                return "enabling";
+                return "wifi enabling";
               default:
                 return "unknown";
             }
