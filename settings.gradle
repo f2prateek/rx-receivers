@@ -1,0 +1,4 @@
+include ':rx-receivers'
+include ':rx-receivers-sample'
+
+rootProject.name = 'rx-receivers-root'
