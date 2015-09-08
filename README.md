@@ -1,4 +1,4 @@
-# Rx Preferences
+# Rx Receivers
 
 Reactive `BroadcastReceiver` implementations for Android. 
 
