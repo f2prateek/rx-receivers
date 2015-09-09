@@ -1,3 +1,5 @@
+[![Android Gems](http://www.android-gems.com/badge/f2prateek/rx-receivers.svg?branch=master)](http://www.android-gems.com/lib/f2prateek/rx-receivers)
+
 # Rx Receivers
 
 Reactive `BroadcastReceiver` implementations for Android. 
