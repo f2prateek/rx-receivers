@@ -14,12 +14,16 @@ android {
   }
 
   lintOptions {
+    disable 'InvalidPackage'
     textReport true
     textOutput 'stdout'
   }
 }
 
 dependencies {
+  provided deps.auto
+  provided deps.jsr250
+
   compile deps.annotations
   compile deps.rxjava
 
