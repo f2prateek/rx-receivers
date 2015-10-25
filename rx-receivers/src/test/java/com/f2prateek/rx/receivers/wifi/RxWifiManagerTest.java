@@ -1,4 +1,4 @@
-package com.f2prateek.rx.preferences.wifi;
+package com.f2prateek.rx.receivers.wifi;
 
 import android.app.Application;
 import android.content.Intent;
