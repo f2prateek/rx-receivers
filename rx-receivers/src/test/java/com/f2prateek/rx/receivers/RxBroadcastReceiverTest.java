@@ -1,4 +1,4 @@
-package com.f2prateek.rx.preferences;
+package com.f2prateek.rx.receivers;
 
 import android.app.Application;
 import android.content.Intent;

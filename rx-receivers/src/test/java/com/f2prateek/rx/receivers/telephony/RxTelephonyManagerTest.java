@@ -1,4 +1,4 @@
-package com.f2prateek.rx.preferences.telephony;
+package com.f2prateek.rx.receivers.telephony;
 
 import android.app.Application;
 import android.content.Intent;
