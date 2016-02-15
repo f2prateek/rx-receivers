@@ -16,6 +16,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 
 import static android.net.wifi.WifiManager.EXTRA_WIFI_STATE;
+import static com.f2prateek.rx.receivers.internal.Preconditions.checkNotNull;
 
 public final class RxWifiManager {
   private RxWifiManager() {
@@ -25,6 +26,7 @@ public final class RxWifiManager {
   /** TODO: docs. */
   @CheckResult @NonNull //
   public static Observable<Integer> wifiStateChanges(@NonNull final Context context) {
+    checkNotNull(context, "context == null");
     IntentFilter filter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
     return RxBroadcastReceiver.create(context, filter).map(new Func1<Intent, Integer>() {
       @Override public Integer call(Intent intent) {
@@ -36,6 +38,7 @@ public final class RxWifiManager {
   /** TODO: docs. */
   @CheckResult @NonNull //
   public static Action1<? super Boolean> wifiState(@NonNull final WifiManager wifiManager) {
+    checkNotNull(wifiManager, "wifiManager == null");
     return new Action1<Boolean>() {
       @Override public void call(Boolean enabled) {
         //noinspection ResourceType
@@ -48,11 +51,11 @@ public final class RxWifiManager {
   @CheckResult @NonNull //
   public static Observable<NetworkStateChangedEvent> //
   networkStateChanges(@NonNull final Context context) {
+    checkNotNull(context, "context == null");
     IntentFilter filter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
     return RxBroadcastReceiver.create(context, filter)
         .map(new Func1<Intent, NetworkStateChangedEvent>() {
           @Override public NetworkStateChangedEvent call(Intent intent) {
-            Preconditions.checkNotNull(intent, "intent == null");
             NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
             String bssid = intent.getStringExtra(WifiManager.EXTRA_BSSID);
             WifiInfo wifiInfo = intent.getParcelableExtra(WifiManager.EXTRA_WIFI_INFO);
@@ -65,6 +68,7 @@ public final class RxWifiManager {
   @CheckResult @NonNull //
   public static Observable<Boolean> //
   supplicantConnectionChanges(@NonNull final Context context) {
+    checkNotNull(context, "context == null");
     IntentFilter filter = new IntentFilter(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
     return RxBroadcastReceiver.create(context, filter).map(new Func1<Intent, Boolean>() {
       @Override public Boolean call(Intent intent) {
@@ -77,6 +81,7 @@ public final class RxWifiManager {
   @CheckResult @NonNull //
   public static Observable<SupplicantStateChangedEvent> //
   supplicantStateChanges(@NonNull final Context context) {
+    checkNotNull(context, "context == null");
     IntentFilter filter = new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
     return RxBroadcastReceiver.create(context, filter)
         .map(new Func1<Intent, SupplicantStateChangedEvent>() {

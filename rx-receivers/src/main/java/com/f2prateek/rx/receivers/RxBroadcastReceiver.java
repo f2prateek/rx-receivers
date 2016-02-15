@@ -18,6 +18,7 @@ public final class RxBroadcastReceiver {
     throw new AssertionError("no instances");
   }
 
+  /** TODO: docs. */
   @CheckResult @NonNull //
   public static Observable<Intent> create(@NonNull final Context context,
       @NonNull final IntentFilter intentFilter) {
