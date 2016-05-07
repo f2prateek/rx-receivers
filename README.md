@@ -28,7 +28,7 @@ The library is available as a snapshot release.
 
 ```groovy
 repositories {
-  mavenCentral()
+  jcenter()
   maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 }
 ```
@@ -37,6 +37,20 @@ repositories {
 compile 'com.f2prateek.rx.receivers:rx-receivers:0.1.0-SNAPSHOT'
 ```
 
+<!-- Uncomment until existing any git tag
+or via jitpack:
+
+```gradle
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile 'com.github.f2prateek:rx-receivers:-SNAPSHOT'
+}
+```
+-->
 
 ### License
 
