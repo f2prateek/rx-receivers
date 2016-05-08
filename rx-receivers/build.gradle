@@ -33,3 +33,13 @@ dependencies {
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+
+tasks.withType(Test) {
+  testLogging {
+    exceptionFormat "full"
+    //events "passed", "skipped", "failed"
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+    showStandardStreams = true
+  }
+}
+

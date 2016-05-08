@@ -26,19 +26,19 @@ public class RxBatteryManagerTest {
   @Test public void plugged() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<Integer> o = new TestSubscriber<>();
+    TestSubscriber<RxBatteryManager.Plugged> o = new TestSubscriber<>();
     RxBatteryManager.plugged(application).subscribe(o);
     o.assertValues();
 
     Intent intent1 = new Intent(Intent.ACTION_BATTERY_CHANGED) //
         .putExtra(BatteryManager.EXTRA_PLUGGED, BatteryManager.BATTERY_PLUGGED_AC);
     application.sendBroadcast(intent1);
-    o.assertValues(BatteryManager.BATTERY_PLUGGED_AC);
+    o.assertValues(RxBatteryManager.Plugged.BATTERY_PLUGGED_AC);
 
     Intent intent2 = new Intent(Intent.ACTION_BATTERY_CHANGED) //
         .putExtra(BatteryManager.EXTRA_PLUGGED, BatteryManager.BATTERY_PLUGGED_USB);
     application.sendBroadcast(intent2);
-    o.assertValues(BatteryManager.BATTERY_PLUGGED_AC, BatteryManager.BATTERY_PLUGGED_USB);
+    o.assertValues(RxBatteryManager.Plugged.BATTERY_PLUGGED_AC, RxBatteryManager.Plugged.BATTERY_PLUGGED_USB);
   }
 
   /** TODO */
@@ -50,19 +50,19 @@ public class RxBatteryManagerTest {
   @Test public void status() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<Integer> o = new TestSubscriber<>();
+    TestSubscriber<RxBatteryManager.Status> o = new TestSubscriber<>();
     RxBatteryManager.status(application).subscribe(o);
     o.assertValues();
 
     Intent intent1 = new Intent(Intent.ACTION_BATTERY_CHANGED) //
         .putExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_CHARGING);
     application.sendBroadcast(intent1);
-    o.assertValues(BatteryManager.BATTERY_STATUS_CHARGING);
+    o.assertValues(RxBatteryManager.Status.BATTERY_STATUS_CHARGING);
 
     Intent intent2 = new Intent(Intent.ACTION_BATTERY_CHANGED) //
         .putExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
     application.sendBroadcast(intent2);
-    o.assertValues(BatteryManager.BATTERY_STATUS_CHARGING, BatteryManager.BATTERY_STATUS_UNKNOWN);
+    o.assertValues(RxBatteryManager.Status.BATTERY_STATUS_CHARGING, RxBatteryManager.Status.BATTERY_STATUS_UNKNOWN);
   }
 
   /** TODO */
