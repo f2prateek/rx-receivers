@@ -40,6 +40,11 @@ public class SampleActivity extends Activity {
     subscriptions.add(s1);
 
     Subscription s2 = RxWifiManager.wifiStateChanges(this) //
+        .map(new Func1<RxWifiManager.State, Integer>() {
+          @Override public Integer call(RxWifiManager.State state) {
+              return state.value();
+          }
+        })
         .map(new Func1<Integer, String>() {
           @Override public String call(Integer integer) {
             switch (integer) {

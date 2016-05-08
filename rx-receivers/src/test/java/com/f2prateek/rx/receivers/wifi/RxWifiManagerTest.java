@@ -30,19 +30,19 @@ public class RxWifiManagerTest {
   @Test public void wifiStateChanges() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<Integer> o = new TestSubscriber<>();
+    TestSubscriber<RxWifiManager.State> o = new TestSubscriber<>();
     RxWifiManager.wifiStateChanges(application).subscribe(o);
     o.assertValues();
 
     Intent intent1 = new Intent(WIFI_STATE_CHANGED_ACTION) //
         .putExtra(EXTRA_WIFI_STATE, WIFI_STATE_DISABLED);
     application.sendBroadcast(intent1);
-    o.assertValues(WIFI_STATE_DISABLED);
+    o.assertValues(RxWifiManager.State.WIFI_STATE_DISABLED);
 
     Intent intent2 = new Intent(WIFI_STATE_CHANGED_ACTION) //
         .putExtra(EXTRA_WIFI_STATE, WIFI_STATE_UNKNOWN);
     application.sendBroadcast(intent2);
-    o.assertValues(WIFI_STATE_DISABLED, WIFI_STATE_UNKNOWN);
+    o.assertValues(RxWifiManager.State.WIFI_STATE_DISABLED, RxWifiManager.State.WIFI_STATE_UNKNOWN);
   }
 
   @SuppressWarnings("ResourceType") @Test //
