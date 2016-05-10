@@ -17,10 +17,15 @@ public class RxBatteryManager {
   }
 
   @CheckResult @NonNull //
+  public static Observable<Intent> changed(@NonNull final Context context) {
+    checkNotNull(context, "context == null");
+    return RxBroadcastReceiver.create(context, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+  }
+
+  @CheckResult @NonNull //
   public static Observable<BatteryChangedEvent> changes(@NonNull final Context context) {
     checkNotNull(context, "context == null");
-    IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-    return RxBroadcastReceiver.create(context, filter).map(new Func1<Intent, BatteryChangedEvent>() {
+    return changed(context).map(new Func1<Intent, BatteryChangedEvent>() {
       @Override public BatteryChangedEvent call(Intent intent) {
           return BatteryChangedEvent.builder()
               .health(intent.getIntExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN))
