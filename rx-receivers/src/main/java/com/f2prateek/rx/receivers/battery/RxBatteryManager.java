@@ -19,7 +19,7 @@ public class RxBatteryManager {
   @CheckResult @NonNull //
   public static Observable<Intent> changed(@NonNull final Context context) {
     checkNotNull(context, "context == null");
-    return RxBroadcastReceiver.create(context, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    return RxBroadcastReceiver.create(context, Intent.ACTION_BATTERY_CHANGED);
   }
 
   @CheckResult @NonNull //
@@ -41,5 +41,91 @@ public class RxBatteryManager {
               .build();
       }
     });
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> changed(@NonNull final Context context, @NonNull final String extra, @NonNull final int defValue) {
+    checkNotNull(context, "context == null");
+    checkNotNull(extra, "extra == null");
+    checkNotNull(defValue, "defValue == null");
+    return RxBroadcastReceiver.create(context, Intent.ACTION_BATTERY_CHANGED, extra, defValue);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Boolean> changed(@NonNull final Context context, @NonNull final String extra, @NonNull final boolean defValue) {
+    checkNotNull(context, "context == null");
+    checkNotNull(extra, "extra == null");
+    checkNotNull(defValue, "defValue == null");
+    return RxBroadcastReceiver.create(context, Intent.ACTION_BATTERY_CHANGED, extra, defValue);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<String> changedString(@NonNull final Context context, @NonNull final String extra) {
+    checkNotNull(context, "context == null");
+    checkNotNull(extra, "extra == null");
+    return RxBroadcastReceiver.createString(context, Intent.ACTION_BATTERY_CHANGED, extra);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> health(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> smallIcon(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_ICON_SMALL, -1);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> level(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_LEVEL, -1);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> plugged(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_PLUGGED, -1);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Boolean> present(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_PRESENT, false);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> scale(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_SCALE, -1);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> status(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<String> technology(@NonNull final Context context) {
+    return changedString(context, BatteryManager.EXTRA_TECHNOLOGY);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> temperature(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_TEMPERATURE, -1);
+  }
+
+  /** TODO: docs. */
+  @CheckResult @NonNull //
+  public static Observable<Integer> voltage(@NonNull final Context context) {
+    return changed(context, BatteryManager.EXTRA_VOLTAGE, -1);
   }
 }

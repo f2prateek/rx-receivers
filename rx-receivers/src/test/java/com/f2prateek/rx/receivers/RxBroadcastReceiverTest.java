@@ -19,7 +19,7 @@ public class RxBroadcastReceiverTest {
   @Test public void createWithNullThrows() {
     try {
       //noinspection ResourceType
-      RxBroadcastReceiver.create(null, null);
+      RxBroadcastReceiver.create(null, (IntentFilter) null);
       fail();
     } catch (NullPointerException e) {
       assertThat(e).hasMessage("context == null");
