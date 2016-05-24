@@ -76,14 +76,4 @@ public abstract class BatteryChangedEvent {
     public abstract @NonNull int temperature();
     public abstract @NonNull int voltage();
 
-    /** TODO: docs. */
-    @CheckResult @NonNull //
-    public static Func1<? super BatteryChangedEvent, ? super Integer> toPlugged() {
-        return new Func1<BatteryChangedEvent, Integer>() {
-            @Override public Integer call(BatteryChangedEvent changes) {
-                return changes.plugged();
-            }
-        };
-    }
-
 }
