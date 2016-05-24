@@ -55,7 +55,7 @@ public abstract class BatteryChangedEvent {
         abstract Builder smallIcon(@NonNull @DrawableRes int smallIcon);
         abstract Builder level(@NonNull int level);
         abstract Builder plugged(@NonNull @BatteryPlugged int plugged);
-        abstract Builder present(@NonNull int present);
+        abstract Builder present(@NonNull boolean present);
         abstract Builder scale(@NonNull int scale);
         abstract Builder status(@NonNull @BatteryStatus int status);
         abstract Builder technology(@Nullable String technology);
@@ -69,7 +69,7 @@ public abstract class BatteryChangedEvent {
     public abstract @NonNull @DrawableRes int smallIcon();
     public abstract @NonNull int level();
     public abstract @NonNull @BatteryPlugged int plugged();
-    public abstract @NonNull int present();
+    public abstract @NonNull boolean present();
     public abstract @NonNull int scale();
     public abstract @NonNull @BatteryStatus int status();
     public abstract @Nullable String technology();

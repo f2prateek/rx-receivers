@@ -32,7 +32,7 @@ public class RxBatteryManager {
               .smallIcon(intent.getIntExtra(BatteryManager.EXTRA_ICON_SMALL, -1))
               .level(intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1))
               .plugged(intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1))
-              .present(intent.getIntExtra(BatteryManager.EXTRA_PRESENT, -1))
+              .present(intent.getBooleanExtra(BatteryManager.EXTRA_PRESENT, false))
               .scale(intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1))
               .status(intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN))
               .technology(intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY))
