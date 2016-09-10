@@ -27,31 +27,25 @@ public class SampleActivity extends RxActivity {
     // Bind views to events.
     RxTelephonyManager.phoneStateChanges(this)
         .compose(this.<PhoneStateChangedEvent>bindUntilEvent(ActivityEvent.PAUSE))
-        .map(new Func1<PhoneStateChangedEvent, String>() {
-          @Override public String call(PhoneStateChangedEvent event) {
-            return event.toString();
-          }
-        }) //
+        .map(Object::toString) //
         .startWith("waiting for change") //
         .map(prefix(getString(R.string.phone_state))) //
         .subscribe(RxTextView.text(phoneStateView));
 
     RxWifiManager.wifiStateChanges(this)
         .compose(this.<Integer>bindUntilEvent(ActivityEvent.PAUSE))
-        .map(new Func1<Integer, String>() {
-          @Override public String call(Integer integer) {
-            switch (integer) {
-              case WifiManager.WIFI_STATE_DISABLED:
-                return "wifi disabled";
-              case WifiManager.WIFI_STATE_DISABLING:
-                return "wifi disabling";
-              case WifiManager.WIFI_STATE_ENABLED:
-                return "wifi enabled";
-              case WifiManager.WIFI_STATE_ENABLING:
-                return "wifi enabling";
-              default:
-                return "unknown";
-            }
+        .map(integer -> {
+          switch (integer) {
+            case WifiManager.WIFI_STATE_DISABLED:
+              return "wifi disabled";
+            case WifiManager.WIFI_STATE_DISABLING:
+              return "wifi disabling";
+            case WifiManager.WIFI_STATE_ENABLED:
+              return "wifi enabled";
+            case WifiManager.WIFI_STATE_ENABLING:
+              return "wifi enabling";
+            default:
+              return "unknown";
           }
         }) //
         .map(prefix(getString(R.string.wifi_state))) //
@@ -59,10 +53,6 @@ public class SampleActivity extends RxActivity {
   }
 
   static Func1<String, String> prefix(final String prefix) {
-    return new Func1<String, String>() {
-      @Override public String call(String s) {
-        return prefix + ": " + s;
-      }
-    };
+    return s -> prefix + ": " + s;
   }
 }
