@@ -5,4 +5,5 @@
 
   <string name="phone_state">Phone State</string>
   <string name="wifi_state">Wifi State</string>
+  <string name="battery_state">Battery State</string>
 </resources>
