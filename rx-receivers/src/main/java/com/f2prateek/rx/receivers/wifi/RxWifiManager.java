@@ -41,7 +41,7 @@ public final class RxWifiManager {
     checkNotNull(wifiManager, "wifiManager == null");
     return new Action1<Boolean>() {
       @Override public void call(Boolean enabled) {
-        //noinspection ResourceType
+        //noinspection MissingPermission
         wifiManager.setWifiEnabled(enabled);
       }
     };

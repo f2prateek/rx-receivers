@@ -26,17 +26,17 @@ public final class RxBroadcastReceiver {
     checkNotNull(intentFilter, "intentFilter == null");
     return Observable.create(new Observable.OnSubscribe<Intent>() {
       @Override public void call(final Subscriber<? super Intent> subscriber) {
-        final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        final BroadcastReceiver receiver = new BroadcastReceiver() {
           @Override public void onReceive(Context context, Intent intent) {
             subscriber.onNext(intent);
           }
         };
 
-        context.registerReceiver(broadcastReceiver, intentFilter);
+        context.registerReceiver(receiver, intentFilter);
 
         subscriber.add(Subscriptions.create(new Action0() {
           @Override public void call() {
-            context.unregisterReceiver(broadcastReceiver);
+            context.unregisterReceiver(receiver);
           }
         }));
       }
