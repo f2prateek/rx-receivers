@@ -35,4 +35,7 @@ ext.deps = [
     junit: 'junit:junit:4.12',
     assertj: 'org.assertj:assertj-core:1.7.0',
     robolectric: 'org.robolectric:robolectric:3.0',
+    rxlifecycle: 'com.trello:rxlifecycle:0.7.0',
+    rxlifecycleandroid: 'com.trello:rxlifecycle-android:0.7.0',
+    rxlifecyclecomponents: 'com.trello:rxlifecycle-components:0.7.0',
 ]

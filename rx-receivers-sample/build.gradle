@@ -29,4 +29,7 @@ dependencies {
   compile deps.rxandroid
   compile deps.rxbinding
   compile deps.butterknife
+  compile deps.rxlifecycle
+  compile deps.rxlifecycleandroid
+  compile deps.rxlifecyclecomponents
 }
