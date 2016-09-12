@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.f2prateek.rx.receivers.battery.BatteryState;
+import com.f2prateek.rx.receivers.battery.RxBatteryManager;
 import com.f2prateek.rx.receivers.telephony.PhoneStateChangedEvent;
 import com.f2prateek.rx.receivers.telephony.RxTelephonyManager;
 import com.f2prateek.rx.receivers.wifi.RxWifiManager;
@@ -16,6 +18,7 @@ import rx.functions.Func1;
 public class SampleActivity extends RxActivity {
   @InjectView(R.id.phone_state) TextView phoneStateView;
   @InjectView(R.id.wifi_state) TextView wifiStateView;
+  @InjectView(R.id.battery_state) TextView batteryStateView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,6 +53,12 @@ public class SampleActivity extends RxActivity {
         }) //
         .map(prefix(getString(R.string.wifi_state))) //
         .subscribe(RxTextView.text(wifiStateView));
+
+    RxBatteryManager.batteryChanges(this)
+        .compose(this.<BatteryState>bindUntilEvent(ActivityEvent.PAUSE))
+        .map(Object::toString)
+        .map(prefix(getString(R.string.battery_state))) //
+        .subscribe(RxTextView.text(batteryStateView));
   }
 
   static Func1<String, String> prefix(final String prefix) {
