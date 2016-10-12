@@ -1,6 +1,6 @@
 # Rx Receivers
 
-Reactive `BroadcastReceiver` implementations for Android. 
+Reactive `BroadcastReceiver` implementations for Android.
 
 *Note*: work in progress
 
@@ -24,17 +24,8 @@ RxWifiManager.supplicantStateChanges(context).subscribe();
 
 ### Download
 
-The library is available as a snapshot release.
-
 ```groovy
-repositories {
-  mavenCentral()
-  maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-}
-```
-
-```groovy
-compile 'com.f2prateek.rx.receivers:rx-receivers:0.1.0-SNAPSHOT'
+compile 'com.f2prateek.rx.receivers:rx-receivers:0.1.0'
 ```
 
 
