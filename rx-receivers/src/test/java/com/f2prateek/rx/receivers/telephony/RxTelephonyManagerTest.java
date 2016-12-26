@@ -2,13 +2,11 @@ package com.f2prateek.rx.receivers.telephony;
 
 import android.app.Application;
 import android.content.Intent;
-import com.f2prateek.rx.receivers.telephony.PhoneStateChangedEvent;
-import com.f2prateek.rx.receivers.telephony.RxTelephonyManager;
+import io.reactivex.subscribers.TestSubscriber;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import rx.observers.TestSubscriber;
 
 import static android.telephony.TelephonyManager.ACTION_PHONE_STATE_CHANGED;
 import static android.telephony.TelephonyManager.EXTRA_INCOMING_NUMBER;
@@ -20,9 +18,9 @@ public class RxTelephonyManagerTest {
   @Test public void phoneStateChanges() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<PhoneStateChangedEvent> o = new TestSubscriber<>();
-    RxTelephonyManager.phoneStateChanges(application).subscribe(o);
-    o.assertValues();
+    TestSubscriber<PhoneStateChangedEvent> ts =
+        RxTelephonyManager.phoneStateChanges(application).test();
+    ts.assertValues();
 
     Intent intent1 = new Intent(ACTION_PHONE_STATE_CHANGED) //
         .putExtra(EXTRA_STATE, EXTRA_INCOMING_NUMBER)
@@ -30,11 +28,11 @@ public class RxTelephonyManagerTest {
     application.sendBroadcast(intent1);
     PhoneStateChangedEvent event1 =
         PhoneStateChangedEvent.create(EXTRA_INCOMING_NUMBER, "123-456-7890");
-    o.assertValues(event1);
+    ts.assertValues(event1);
 
     Intent intent2 = new Intent(ACTION_PHONE_STATE_CHANGED).putExtra(EXTRA_STATE, EXTRA_STATE_IDLE);
     application.sendBroadcast(intent2);
     PhoneStateChangedEvent event2 = PhoneStateChangedEvent.create(EXTRA_STATE_IDLE, null);
-    o.assertValues(event1, event2);
+    ts.assertValues(event1, event2);
   }
 }

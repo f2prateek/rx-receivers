@@ -28,7 +28,6 @@ android {
 dependencies {
   compile project(':rx-receivers')
   compile deps.rxandroid
-  compile deps.rxbinding
   compile deps.butterknife
   compile deps.rxlifecycle
   compile deps.rxlifecycleandroid

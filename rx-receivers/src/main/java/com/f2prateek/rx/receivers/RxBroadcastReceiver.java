@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
-import rx.subscriptions.Subscriptions;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.functions.Cancellable;
 
 import static com.f2prateek.rx.receivers.internal.Preconditions.checkNotNull;
 
@@ -20,26 +22,26 @@ public final class RxBroadcastReceiver {
 
   /** TODO: docs. */
   @CheckResult @NonNull //
-  public static Observable<Intent> create(@NonNull final Context context,
+  public static Flowable<Intent> create(@NonNull final Context context,
       @NonNull final IntentFilter intentFilter) {
     checkNotNull(context, "context == null");
     checkNotNull(intentFilter, "intentFilter == null");
-    return Observable.create(new Observable.OnSubscribe<Intent>() {
-      @Override public void call(final Subscriber<? super Intent> subscriber) {
+    return Flowable.create(new FlowableOnSubscribe<Intent>() {
+      @Override public void subscribe(final FlowableEmitter<Intent> emitter) throws Exception {
         final BroadcastReceiver receiver = new BroadcastReceiver() {
           @Override public void onReceive(Context context, Intent intent) {
-            subscriber.onNext(intent);
+            emitter.onNext(intent);
           }
         };
 
         context.registerReceiver(receiver, intentFilter);
 
-        subscriber.add(Subscriptions.create(new Action0() {
-          @Override public void call() {
+        emitter.setCancellable(new Cancellable() {
+          @Override public void cancel() throws Exception {
             context.unregisterReceiver(receiver);
           }
-        }));
+        });
       }
-    });
+    }, BackpressureStrategy.BUFFER);
   }
 }

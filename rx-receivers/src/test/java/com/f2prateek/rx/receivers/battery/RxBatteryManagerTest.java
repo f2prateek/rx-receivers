@@ -3,20 +3,19 @@ package com.f2prateek.rx.receivers.battery;
 import android.app.Application;
 import android.content.Intent;
 import android.os.BatteryManager;
+import io.reactivex.subscribers.TestSubscriber;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import rx.observers.TestSubscriber;
 
 @RunWith(RobolectricTestRunner.class) //
 public class RxBatteryManagerTest {
   @Test public void batteryStateChanges() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<BatteryState> o = new TestSubscriber<>();
-    RxBatteryManager.batteryChanges(application).subscribe(o);
-    o.assertValues();
+    TestSubscriber<BatteryState> ts = RxBatteryManager.batteryChanges(application).test();
+    ts.assertValues();
 
     Intent intent1 = new Intent(Intent.ACTION_BATTERY_CHANGED) //
         .putExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_COLD)
@@ -31,8 +30,8 @@ public class RxBatteryManagerTest {
         .putExtra(BatteryManager.EXTRA_VOLTAGE, 10000);
     application.sendBroadcast(intent1);
     BatteryState event1 =
-        BatteryState.create(BatteryHealth.COLD, 0x3def2, 10, 0, true, 100,
-            BatteryStatus.CHARGING, "unknown", 40, 10000);
-    o.assertValues(event1);
+        BatteryState.create(BatteryHealth.COLD, 0x3def2, 10, 0, true, 100, BatteryStatus.CHARGING,
+            "unknown", 40, 10000);
+    ts.assertValues(event1);
   }
 }
