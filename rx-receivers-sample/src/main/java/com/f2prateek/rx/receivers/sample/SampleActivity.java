@@ -3,8 +3,8 @@ package com.f2prateek.rx.receivers.sample;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.f2prateek.rx.receivers.battery.BatteryState;
 import com.f2prateek.rx.receivers.battery.RxBatteryManager;
 import com.f2prateek.rx.receivers.telephony.PhoneStateChangedEvent;
@@ -16,16 +16,16 @@ import com.trello.rxlifecycle.components.RxActivity;
 import rx.functions.Func1;
 
 public class SampleActivity extends RxActivity {
-  @InjectView(R.id.phone_state) TextView phoneStateView;
-  @InjectView(R.id.wifi_state) TextView wifiStateView;
-  @InjectView(R.id.battery_state) TextView batteryStateView;
+  @BindView(R.id.phone_state) TextView phoneStateView;
+  @BindView(R.id.wifi_state) TextView wifiStateView;
+  @BindView(R.id.battery_state) TextView batteryStateView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     // Setup views.
     setContentView(R.layout.sample_activity);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
 
     // Bind views to events.
     RxTelephonyManager.phoneStateChanges(this)

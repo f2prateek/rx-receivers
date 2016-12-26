@@ -33,7 +33,7 @@ ext.deps = [
     rxjava: 'io.reactivex:rxjava:1.2.4',
     rxandroid: 'io.reactivex:rxandroid:1.2.1',
     rxbinding:   'com.jakewharton.rxbinding:rxbinding:1.0.0',
-    butterknife: 'com.jakewharton:butterknife:6.1.0',
+    butterknife: 'com.jakewharton:butterknife:8.4.0',
     junit: 'junit:junit:4.12',
     assertj: 'org.assertj:assertj-core:1.7.0',
     robolectric: 'org.robolectric:robolectric:3.0',
