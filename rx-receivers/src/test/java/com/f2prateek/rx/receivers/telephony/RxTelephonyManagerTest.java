@@ -4,11 +4,11 @@ import android.app.Application;
 import android.content.Intent;
 import com.f2prateek.rx.receivers.telephony.PhoneStateChangedEvent;
 import com.f2prateek.rx.receivers.telephony.RxTelephonyManager;
+import io.reactivex.observers.TestObserver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import rx.observers.TestSubscriber;
 
 import static android.telephony.TelephonyManager.ACTION_PHONE_STATE_CHANGED;
 import static android.telephony.TelephonyManager.EXTRA_INCOMING_NUMBER;
@@ -20,7 +20,7 @@ public class RxTelephonyManagerTest {
   @Test public void phoneStateChanges() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<PhoneStateChangedEvent> o = new TestSubscriber<>();
+    final TestObserver<PhoneStateChangedEvent> o = new TestObserver<>();
     RxTelephonyManager.phoneStateChanges(application).subscribe(o);
     o.assertValues();
 

@@ -5,15 +5,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.f2prateek.rx.receivers.battery.BatteryState;
 import com.f2prateek.rx.receivers.battery.RxBatteryManager;
-import com.f2prateek.rx.receivers.telephony.PhoneStateChangedEvent;
 import com.f2prateek.rx.receivers.telephony.RxTelephonyManager;
 import com.f2prateek.rx.receivers.wifi.RxWifiManager;
-import com.jakewharton.rxbinding.widget.RxTextView;
-import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.components.RxActivity;
-import rx.functions.Func1;
+import io.reactivex.functions.Function;
 
 public class SampleActivity extends RxActivity {
   @InjectView(R.id.phone_state) TextView phoneStateView;
@@ -29,14 +25,12 @@ public class SampleActivity extends RxActivity {
 
     // Bind views to events.
     RxTelephonyManager.phoneStateChanges(this)
-        .compose(this.<PhoneStateChangedEvent>bindUntilEvent(ActivityEvent.PAUSE))
-        .map(Object::toString) //
-        .startWith("waiting for change") //
-        .map(prefix(getString(R.string.phone_state))) //
-        .subscribe(RxTextView.text(phoneStateView));
+        .map(Object::toString)
+        .startWith("waiting for change")
+        .map(prefix(getString(R.string.phone_state)))
+        .subscribe(s -> phoneStateView.setText(s));
 
     RxWifiManager.wifiStateChanges(this)
-        .compose(this.<Integer>bindUntilEvent(ActivityEvent.PAUSE))
         .map(integer -> {
           switch (integer) {
             case WifiManager.WIFI_STATE_DISABLED:
@@ -50,18 +44,17 @@ public class SampleActivity extends RxActivity {
             default:
               return "unknown";
           }
-        }) //
-        .map(prefix(getString(R.string.wifi_state))) //
-        .subscribe(RxTextView.text(wifiStateView));
+        })
+        .map(prefix(getString(R.string.wifi_state)))
+        .subscribe(s -> wifiStateView.setText(s));
 
     RxBatteryManager.batteryChanges(this)
-        .compose(this.<BatteryState>bindUntilEvent(ActivityEvent.PAUSE))
         .map(Object::toString)
-        .map(prefix(getString(R.string.battery_state))) //
-        .subscribe(RxTextView.text(batteryStateView));
+        .map(prefix(getString(R.string.battery_state)))
+        .subscribe(s -> batteryStateView.setText(s));
   }
 
-  static Func1<String, String> prefix(final String prefix) {
+  static Function<String, String> prefix(final String prefix) {
     return s -> prefix + ": " + s;
   }
 }

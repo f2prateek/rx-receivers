@@ -7,8 +7,8 @@ import android.os.BatteryManager;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import com.f2prateek.rx.receivers.RxBroadcastReceiver;
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 import static com.f2prateek.rx.receivers.internal.Preconditions.checkNotNull;
 
@@ -23,8 +23,9 @@ public class RxBatteryManager {
     checkNotNull(context, "context == null");
     IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
     return RxBroadcastReceiver.create(context, filter) //
-        .map(new Func1<Intent, BatteryState>() {
-          @Override public BatteryState call(Intent intent) {
+        .map(new Function<Intent, BatteryState>() {
+          @Override
+          public BatteryState apply(@NonNull final Intent intent) {
             int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1);
             int iconSmall = intent.getIntExtra(BatteryManager.EXTRA_ICON_SMALL, -1);
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
@@ -36,7 +37,7 @@ public class RxBatteryManager {
             int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
             int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
             return BatteryState.create(BatteryHealth.of(health), iconSmall, level, plugged, present,
-                scale, BatteryStatus.of(status), technology, temperature, voltage);
+                    scale, BatteryStatus.of(status), technology, temperature, voltage);
           }
         });
   }
