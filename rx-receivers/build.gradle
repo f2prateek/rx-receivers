@@ -18,6 +18,10 @@ android {
     textReport true
     textOutput 'stdout'
   }
+
+  packagingOptions {
+    exclude 'META-INF/rxjava.properties'
+  }
 }
 
 dependencies {

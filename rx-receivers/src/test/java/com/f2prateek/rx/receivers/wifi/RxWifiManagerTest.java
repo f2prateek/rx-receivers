@@ -10,11 +10,11 @@ import android.os.Parcelable;
 import com.f2prateek.rx.receivers.wifi.NetworkStateChangedEvent;
 import com.f2prateek.rx.receivers.wifi.RxWifiManager;
 import com.f2prateek.rx.receivers.wifi.SupplicantStateChangedEvent;
+import io.reactivex.observers.TestObserver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import rx.observers.TestSubscriber;
 
 import static android.net.wifi.WifiManager.ERROR_AUTHENTICATING;
 import static android.net.wifi.WifiManager.EXTRA_NEW_STATE;
@@ -30,7 +30,7 @@ public class RxWifiManagerTest {
   @Test public void wifiStateChanges() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<Integer> o = new TestSubscriber<>();
+    final TestObserver<Integer> o = new TestObserver<>();
     RxWifiManager.wifiStateChanges(application).subscribe(o);
     o.assertValues();
 
@@ -49,7 +49,7 @@ public class RxWifiManagerTest {
   public void networkStateChanges() throws IllegalAccessException, InstantiationException {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<NetworkStateChangedEvent> o = new TestSubscriber<>();
+    final TestObserver<NetworkStateChangedEvent> o = new TestObserver<>();
     RxWifiManager.networkStateChanges(application).subscribe(o);
     o.assertValues();
 
@@ -76,7 +76,7 @@ public class RxWifiManagerTest {
   public void supplicantStateChanges() throws IllegalAccessException, InstantiationException {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<SupplicantStateChangedEvent> o = new TestSubscriber<>();
+    final TestObserver<SupplicantStateChangedEvent> o = new TestObserver<>();
     RxWifiManager.supplicantStateChanges(application).subscribe(o);
     o.assertValues();
 
@@ -101,7 +101,7 @@ public class RxWifiManagerTest {
   public void supplicantConnectionChanges() throws IllegalAccessException, InstantiationException {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<Boolean> o = new TestSubscriber<>();
+    final TestObserver<Boolean> o = new TestObserver<>();
     RxWifiManager.supplicantConnectionChanges(application).subscribe(o);
     o.assertValues();
 

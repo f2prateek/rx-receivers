@@ -3,18 +3,18 @@ package com.f2prateek.rx.receivers.battery;
 import android.app.Application;
 import android.content.Intent;
 import android.os.BatteryManager;
+import io.reactivex.observers.TestObserver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import rx.observers.TestSubscriber;
 
 @RunWith(RobolectricTestRunner.class) //
 public class RxBatteryManagerTest {
   @Test public void batteryStateChanges() {
     Application application = RuntimeEnvironment.application;
 
-    TestSubscriber<BatteryState> o = new TestSubscriber<>();
+    final TestObserver<BatteryState> o = new TestObserver<>();
     RxBatteryManager.batteryChanges(application).subscribe(o);
     o.assertValues();
 

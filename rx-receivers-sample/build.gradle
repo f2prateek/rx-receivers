@@ -23,6 +23,10 @@ android {
     textOutput 'stdout'
     ignoreWarnings true
   }
+
+  packagingOptions {
+    exclude 'META-INF/rxjava.properties'
+  }
 }
 
 dependencies {
