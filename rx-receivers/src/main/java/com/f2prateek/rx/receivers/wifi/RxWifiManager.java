@@ -35,21 +35,6 @@ public final class RxWifiManager {
   }
 
   /** TODO: docs. */
-  /*
-  @CheckResult @NonNull //
-  public static Action1<? super Boolean> wifiState(@NonNull final WifiManager wifiManager) {
-    checkNotNull(wifiManager, "wifiManager == null");
-    wifiManager.wifi
-    return new Action1<Boolean>() {
-      @Override public void call(Boolean enabled) {
-        //noinspection MissingPermission
-        wifiManager.setWifiEnabled(enabled);
-      }
-    };
-  }
-  */
-
-  /** TODO: docs. */
   @CheckResult @NonNull //
   public static Observable<NetworkStateChangedEvent> //
   networkStateChanges(@NonNull final Context context) {
